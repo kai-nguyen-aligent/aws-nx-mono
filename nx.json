@@ -5,6 +5,5 @@
     "production": ["default"],
     "sharedGlobals": ["{workspaceRoot}/bitbucket-pipelines.yml"]
   },
-  "nxCloudAccessToken": "ZGQwMGZjZjMtYzFlYi00Y2NlLTkwNWUtZjc0YjYxZGRjZjZmfHJlYWQtd3JpdGU=",
   "defaultBase": "origin/main"
 }

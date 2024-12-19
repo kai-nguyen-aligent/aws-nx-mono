@@ -1,0 +1,62 @@
+// For format details, see https://aka.ms/devcontainer.json.
+// For config options, see the README at: https://github.com/devcontainers/templates/tree/main/src/typescript-node
+{
+    "name": "aws-sam-nodejs-service-template",
+    // Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+    // Image info https://mcr.microsoft.com/en-us/product/devcontainers/typescript-node/about
+    "image": "mcr.microsoft.com/devcontainers/typescript-node:18-bullseye",
+    "mounts": [
+        "type=bind,src=${localEnv:HOME}/.aws,dst=/home/node/.aws"
+    ],
+    // Features to add to the dev container. More info: https://containers.dev/features.
+    "features": {
+        "ghcr.io/devcontainers/features/aws-cli:1": {
+            "version": "latest"
+        },
+        "ghcr.io/customink/codespaces-features/sam-cli": {
+            "version": "latest"
+        },
+        "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+            "version": "latest",
+            "dockerDashComposeVersion": "none"
+        },
+        "ghcr.io/devcontainers/features/git:1": {}
+    },
+    // Use 'postCreateCommand' to run commands after the container is created.
+    // "postCreateCommand": "npm ci",
+    // Configure tool-specific properties.
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "amazonwebservices.amazon-q-vscode",
+                "amazonwebservices.aws-toolkit-vscode",
+                "dbaeumer.vscode-eslint",
+                "esbenp.prettier-vscode",
+                "redhat.vscode-yaml"
+            ],
+            "settings": {
+                "editor.defaultFormatter": "esbenp.prettier-vscode",
+                "editor.formatOnSave": true,
+                "editor.codeActionsOnSave": {
+                    "source.fixAll.eslint": "always"
+                },
+                "eslint.validate": [
+                    "javascript",
+                    "typescript"
+                ],
+                "prettier-eslint.eslintIntegration": true,
+                "prettier.prettierPath": "./node_modules/prettier",
+                "[dockercompose]": {
+                    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+                },
+                "[javascript][typescript][typescriptreact]": {
+                    "editor.defaultFormatter": "esbenp.prettier-vscode",
+                    "editor.codeActionsOnSave": {
+                        "source.organizeImports": "always",
+                        "source.sortMembers": "always"
+                    }
+                }
+            }
+        }
+    }
+}
