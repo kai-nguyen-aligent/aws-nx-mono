@@ -28,7 +28,7 @@ Parameters:
 
 # More info about Metadata: https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/metadata-section-structure.html
 Metadata:
-  EsbuildConfig: &EsbuildConfig
+  EsbuildConfig:
     BuildMethod: esbuild
     BuildProperties:
       Minify: false
@@ -49,7 +49,13 @@ Resources:
             Path: /hello
             Method: get
     Metadata:
-      <<: *EsbuildConfig
+      <<:
+        BuildMethod: esbuild
+        BuildProperties:
+          Minify: false
+          Target: es2022
+          Sourcemap: true
+          SourcesContent: false
 
   SamFunction:
     Type: AWS::Serverless::Function
@@ -63,7 +69,56 @@ Resources:
             Path: /sam
             Method: get
     Metadata:
-      <<: *EsbuildConfig
+      <<:
+        BuildMethod: esbuild
+        BuildProperties:
+          Minify: false
+          Target: es2022
+          Sourcemap: true
+          SourcesContent: false
+
+  StateMachine:
+    Type: AWS::Serverless::StateMachine
+    Properties:
+      Name: !Sub ${AWS::StackName}-${Stage}-StateMachine
+      Type: STANDARD
+      Tracing:
+        Enabled: true
+      Logging:
+        Level: ALL
+        IncludeExecutionData: true
+        Destinations:
+          - CloudWatchLogsLogGroup:
+              LogGroupArn: !GetAtt StateMachineLogGroup.Arn
+      Policies:
+        - AWSXrayWriteOnlyAccess
+        - Statement:
+            - Effect: Allow
+              Action:
+                - logs:CreateLogDelivery
+                - logs:GetLogDelivery
+                - logs:UpdateLogDelivery
+                - logs:DeleteLogDelivery
+                - logs:ListLogDeliveries
+                - logs:PutResourcePolicy
+                - logs:DescribeResourcePolicies
+                - logs:DescribeLogGroups
+              Resource: '*'
+        - LambdaInvokePolicy:
+            FunctionName: !Ref HelloFunction
+        - LambdaInvokePolicy:
+            FunctionName: !Ref SamFunction
+      DefinitionSubstitutions:
+        HelloFunction: !Ref HelloFunction
+        SamFunction: !Ref SamFunction
+      DefinitionUri: state-machines/state-machine.asl.yml
+
+  StateMachineLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: !Sub
+        - /aws/vendedlogs/states/${AWS::StackName}-${ResourceId}-Logs
+        - ResourceId: StateMachine
 
 Outputs:
   # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function

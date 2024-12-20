@@ -1,0 +1,33 @@
+StartAt: InvokeHello
+States:
+  InvokeHello:
+    Type: Task
+    Resource: arn:aws:states:::lambda:invoke
+    Parameters:
+      FunctionName: ${HelloFunction}
+    Next: Wait
+  Wait:
+    Type: Wait
+    Seconds: 3
+    Next: InvokeSam
+  InvokeSam:
+    Type: Task
+    Resource: arn:aws:states:::lambda:invoke
+    OutputPath: $.Payload
+    Parameters:
+      Payload.$: $
+      FunctionName: ${SamFunction}
+    Retry:
+      - ErrorEquals:
+          - Lambda.ServiceException
+          - Lambda.AWSLambdaException
+          - Lambda.SdkClientException
+          - Lambda.TooManyRequestsException
+        IntervalSeconds: 1
+        MaxAttempts: 3
+        BackoffRate: 2
+        JitterStrategy: FULL
+    Next: Pass
+  Pass:
+    Type: Pass
+    End: true

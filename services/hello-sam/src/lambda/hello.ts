@@ -14,11 +14,11 @@ import axios from 'axios';
 export const lambdaHandler = async (
   event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
-  if (!event.body) {
-    throw new Error('Event body not found!');
-  }
-
   try {
+    if (!event.body) {
+      throw new Error('Event body not found!');
+    }
+
     const { data } = await axios.get('https://pokeapi.co/api/v2/pokemon/ditto');
 
     return {
@@ -26,7 +26,8 @@ export const lambdaHandler = async (
       body: JSON.stringify(data),
     };
   } catch (err) {
-    console.log(err);
+    console.error(err);
+
     return {
       statusCode: 500,
       body: JSON.stringify({
