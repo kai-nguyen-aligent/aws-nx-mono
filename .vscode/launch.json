@@ -6,14 +6,14 @@
             "name": "hello-sam:src/lambda/hello.lambdaHandler (nodejs18.x)",
             "invokeTarget": {
                 "target": "code",
-                "projectRoot": "${workspaceFolder}/services/hello-sam",
-                "lambdaHandler": "src/lambda/hello.lambdaHandler"
+                "projectRoot": "${workspaceFolder}",
+                "lambdaHandler": "services/hello-sam/src/lambda/hello.lambdaHandler"
             },
             "lambda": {
                 "runtime": "nodejs18.x",
                 "payload": {
                     "json": {
-                        "test": "test"
+                        "body": "test"
                     }
                 },
                 "environmentVariables": {}
