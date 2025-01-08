@@ -1,23 +1,26 @@
 {
-    "configurations": [
-        {
-            "type": "aws-sam",
-            "request": "direct-invoke",
-            "name": "hello-sam:src/lambda/hello.lambdaHandler (nodejs18.x)",
-            "invokeTarget": {
-                "target": "code",
-                "projectRoot": "${workspaceFolder}",
-                "lambdaHandler": "services/hello-sam/src/lambda/hello.lambdaHandler"
-            },
-            "lambda": {
-                "runtime": "nodejs18.x",
-                "payload": {
-                    "json": {
-                        "body": "test"
-                    }
-                },
-                "environmentVariables": {}
-            }
-        }
-    ]
+  "configurations": [
+    {
+      "type": "aws-sam",
+      "request": "direct-invoke",
+      "name": "hello-sam:HelloFunction (nodejs18.x)",
+      "invokeTarget": {
+        "target": "template",
+        "templatePath": "${workspaceFolder}/services/hello-sam/template.yml",
+        "logicalId": "HelloFunction"
+        // "target": "code",
+        // "projectRoot": "${workspaceFolder}/services/hello-sam",
+        // "lambdaHandler": "src/lambda/hello.lambdaHandler"
+      },
+      "lambda": {
+        "runtime": "nodejs18.x",
+        "payload": {
+          "json": {
+            "body": "test"
+          }
+        },
+        "environmentVariables": {}
+      },
+    }
+  ]
 }
