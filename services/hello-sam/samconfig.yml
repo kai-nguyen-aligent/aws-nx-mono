@@ -6,17 +6,18 @@ default:
   global:
     parameters:
       region: ap-southeast-2
+      stack_name: poc-hello-sam-kai
   build:
     parameters:
       cached: true
       parallel: true
       # build_in_source: true
+      debug: true
   validate:
     parameters:
       lint: true
   deploy:
     parameters:
-      stack_name: poc-hello-sam-kai
       s3_prefix: poc-hello-sam-kai
       capabilities: CAPABILITY_IAM
       resolve_s3: true

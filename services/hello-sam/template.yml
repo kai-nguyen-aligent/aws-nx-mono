@@ -49,13 +49,12 @@ Resources:
             Path: /hello
             Method: get
     Metadata:
-      <<:
-        BuildMethod: esbuild
-        BuildProperties:
-          Minify: false
-          Target: es2022
-          Sourcemap: true
-          SourcesContent: false
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: false
+        Target: es2022
+        Sourcemap: true
+        SourcesContent: false
 
   SamFunction:
     Type: AWS::Serverless::Function
@@ -69,13 +68,12 @@ Resources:
             Path: /sam
             Method: get
     Metadata:
-      <<:
-        BuildMethod: esbuild
-        BuildProperties:
-          Minify: false
-          Target: es2022
-          Sourcemap: true
-          SourcesContent: false
+      BuildMethod: esbuild
+      BuildProperties:
+        Minify: false
+        Target: es2022
+        Sourcemap: true
+        SourcesContent: false # Don't understand why this doesn't work :(
 
   StateMachine:
     Type: AWS::Serverless::StateMachine

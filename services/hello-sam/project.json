@@ -48,7 +48,7 @@
             "executor": "@nx/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
-                "lintFilePatterns": ["services/customers/**/*.ts"],
+                "lintFilePatterns": ["services/hello-sam/**/*.ts"],
                 "maxWarnings": 0
             }
         },
@@ -57,7 +57,7 @@
             "outputs": ["{options.reportsDirectory}"],
             "options": {
                 "passWithNoTests": true,
-                "reportsDirectory": "../../coverage/services/customers"
+                "reportsDirectory": "../../coverage/services/hello-sam"
             }
         }
     },
