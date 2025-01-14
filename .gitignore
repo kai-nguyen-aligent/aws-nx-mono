@@ -4,6 +4,8 @@
 dist
 tmp
 /out-tsc
+**/.esbuild
+**/.rolldown
 
 # dependencies
 node_modules
@@ -43,3 +45,6 @@ Thumbs.db
 
 # AWS SAM artifacts
 **/.aws-sam
+
+# AWS CDK artifacts
+**/cdk.out

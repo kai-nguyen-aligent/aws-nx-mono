@@ -1,0 +1,8 @@
+{
+  "name": "hello-cdk",
+  "version": "0.0.1",
+  "type": "commonjs",
+  "bin": {
+    "hello-cdk": "bin/hello-cdk.js"
+  }
+}

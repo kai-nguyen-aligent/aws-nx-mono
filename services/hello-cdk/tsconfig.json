@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+      "esModuleInterop": true,
+      "module": "CommonJS"
+  },
+  "include": [
+      "vite.config.mts",
+      "src/**/*.ts",
+      "tests/**/*.ts",
+      "**/*.test.ts"
+  ]
+}

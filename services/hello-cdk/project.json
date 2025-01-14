@@ -1,0 +1,91 @@
+{
+  "name": "hello-cdk",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "services/hello-cdk/src",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "color": true,
+        "commands": "cdk synth"
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "color": true,
+        "command": "cdk deploy"
+      }
+    },
+    "validate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "color": true,
+        "command": "cdk --help"
+      }
+    },
+    "remove": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "color": true,
+        "command": "cdk destroy"
+      }
+    },
+    "check-types": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "color": true,
+        "command": "tsc --noEmit --pretty"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "services/hello-cdk/**/*.ts"
+        ],
+        "maxWarnings": 0
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": [
+        "{options.reportsDirectory}"
+      ],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../coverage/services/hello-cdk"
+      }
+    },
+    "debug-bundle": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "color": true,
+        "command": "esbuild --bundle --outdir=.esbuild --format=cjs --platform=node --target=node16 --sourcemap ./src/lambda/*.ts"
+      }
+    },
+    "rolldown-bundle": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "{projectRoot}",
+        "color": true,
+        "command": "rolldown ./src/lambda/*.ts --dir=.rolldown --format=cjs --platform=node --name=bundle --sourcemap"
+      }
+    }
+  },
+  "tags": [
+    "service",
+    "general",
+    "hello-sam"
+  ]
+}

@@ -3,24 +3,42 @@
     {
       "type": "aws-sam",
       "request": "direct-invoke",
-      "name": "hello-sam:HelloFunction (nodejs18.x)",
+      "name": "hello-cdk:HelloFunction (nodejs18.x)",
+      "preLaunchTask": "nx: nx run hello-cdk:debug-bundle",
       "invokeTarget": {
-        "target": "template",
-        "templatePath": "${workspaceFolder}/services/hello-sam/template.yml",
-        "logicalId": "HelloFunction"
-        // "target": "code",
-        // "projectRoot": "${workspaceFolder}/services/hello-sam",
-        // "lambdaHandler": "src/lambda/hello.lambdaHandler"
+        "target": "code",
+        "projectRoot": "${workspaceFolder}/services/hello-cdk/.esbuild",
+        "lambdaHandler": "hello.lambdaHandler"
       },
       "lambda": {
         "runtime": "nodejs18.x",
         "payload": {
           "json": {
-            "body": "test"
+            "body": "Test AWS CDK"
           }
         },
         "environmentVariables": {}
       },
-    }
+    },
+    {
+      "type": "aws-sam",
+      "request": "direct-invoke",
+      "name": "hello-sam:HelloFunction (nodejs18.x)",
+      "preLaunchTask": "nx: nx run hello-sam:build",
+      "invokeTarget": {
+        "target": "code",
+        "projectRoot": "${workspaceFolder}/services/hello-sam/.aws-sam/build",
+        "lambdaHandler": "HelloFunction/hello.lambdaHandler"
+      },
+      "lambda": {
+        "runtime": "nodejs18.x",
+        "payload": {
+          "json": {
+            "body": "Test AWS SAM"
+          }
+        },
+        "environmentVariables": {}
+      },
+    },
   ]
 }
