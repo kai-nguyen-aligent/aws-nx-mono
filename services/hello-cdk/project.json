@@ -9,7 +9,7 @@
       "options": {
         "cwd": "{projectRoot}",
         "color": true,
-        "commands": "cdk synth"
+        "command": "cdk synth"
       }
     },
     "deploy": {
